@@ -46,12 +46,10 @@ class Directory extends React.Component {
   render() {
     return (
       <div className="directory-menu">
-        {this.state.sections.map(({ id, imageUrl, title, size }) => (
+        {this.state.sections.map(({ id, ...allOtherProps }) => (
           <MenuItem
             key={id}
-            title={title.toUpperCase()}
-            imageUrl={imageUrl}
-            size={size}
+            {...allOtherProps} // Es6 Feature, instead of writing all seperately we use this and it will pass them down as name=theObject.name individually for all props
           ></MenuItem>
         ))}
       </div>
