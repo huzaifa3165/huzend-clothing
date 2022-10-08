@@ -9,5 +9,4 @@ const Button = ({ children, isGoogleSignIn, ...otherProps }) => {
     </button>
   );
 };
-
 export default Button;
