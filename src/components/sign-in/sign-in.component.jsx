@@ -2,7 +2,7 @@ import React from "react";
 import "./sign-in.styles.scss";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
-import { signInWithGoogle } from "../firebase/firebase.utils.js";
+import { auth, signInWithGoogle } from "../firebase/firebase.utils.js";
 
 class SignIn extends React.Component {
   constructor() {
@@ -12,8 +12,15 @@ class SignIn extends React.Component {
       password: "",
     };
   }
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
+    const { email, password } = this.state;
+    await auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      if (error.code === "auth/wrong-password") alert("Wrong password");
+      if (error.code === "auth/user-not-found")
+        alert("No User Exist with this email!");
+    });
+
     this.setState({
       email: "",
       password: "",

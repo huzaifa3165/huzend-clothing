@@ -28,15 +28,15 @@ class SignUp extends React.Component {
         password
       );
       await createNewUserIfExist(user, { displayName });
+      this.setState({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (error) {
       console.log(error);
     }
-    this.setState({
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
     console.log("done submiting");
   };
   handleChange = (event) => {
