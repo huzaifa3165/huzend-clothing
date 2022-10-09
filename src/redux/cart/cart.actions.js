@@ -11,3 +11,16 @@ export const addToCart = (item) => {
     payload: item,
   };
 };
+export const removeFromCart = (item) => {
+  return {
+    type: cartAction.REMOVE_ITEM,
+    payload: item,
+  };
+};
+
+export const decrementFromCart = (item) => {
+  return {
+    type: cartAction.DECREMENT_ITEM,
+    payload: item,
+  };
+};

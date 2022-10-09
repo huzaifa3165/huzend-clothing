@@ -1,12 +1,4 @@
 export const addItemToCart = (prevCartItems, newItem) => {
-  // prevCartItems is an array
-  // newItem is an object
-
-  // Check if the prevCartItem has an existing object with matching id
-  // If there is any find( which can only be one ) increase the quantity property by one
-  // If there is no matched means its a totaly new item, then add quantity property to it and append it in to the array
-  // return that array
-
   const existingCartItem = prevCartItems.find(
     (cartItem) => cartItem.id === newItem.id // return true or false
   );
@@ -19,5 +11,17 @@ export const addItemToCart = (prevCartItems, newItem) => {
     });
   } else {
     return [...prevCartItems, { ...newItem, quantity: 1 }];
+  }
+};
+
+export const decrementFromCartFunc = (prevCartItems, newItem) => {
+  if (newItem.quantity === 1) {
+    return prevCartItems.filter((item) => item.id !== newItem.id);
+  } else {
+    return prevCartItems.map((cartItem) => {
+      return cartItem.id === newItem.id
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem;
+    });
   }
 };
