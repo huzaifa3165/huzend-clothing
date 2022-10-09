@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
-import { isHidden } from "../../redux/cart/cart.actions";
 
-const Header = ({ currentUser, isCartHidden, isHidden }) => {
+const Header = ({ currentUser, isCartHidden }) => {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -31,14 +30,14 @@ const Header = ({ currentUser, isCartHidden, isHidden }) => {
         )}
         <CartIcon />
       </div>
-      {isCartHidden.hidden ? null : <CartDropDown />}
+      {isCartHidden ? null : <CartDropDown />}
     </div>
   );
 };
 const mapStateToProps = (state) => {
   return {
     currentUser: state.user.currentUser,
-    isCartHidden: state.isCartHidden,
+    isCartHidden: state.cartReducer.hidden,
   };
 };
 
