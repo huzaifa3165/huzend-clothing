@@ -11,6 +11,8 @@ import {
 import { connect } from "react-redux";
 import { Component } from "react";
 import { setCurrentUser } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.reselect";
+import Checkout from "./components/checkout/checkout.component";
 
 class App extends Component {
   unsubscribeAuthOnCalling = null;
@@ -51,19 +53,19 @@ class App extends Component {
               )
             }
           ></Route>
+          <Route path="/checkout" element={<Checkout />}></Route>
         </Routes>
       </div>
     );
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     setCurrentUser: (user) => dispatch(setCurrentUser(user)),
   };
 };
-const mapStateToProps = ({ user }) => {
-  return { currentUser: user.currentUser };
+const mapStateToProps = (state) => {
+  return { currentUser: selectCurrentUser(state) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
