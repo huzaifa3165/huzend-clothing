@@ -13,6 +13,8 @@ import { Component } from "react";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.reselect";
 import Checkout from "./components/checkout/checkout.component";
+import CollectionOverview from "./components/collections-overview/collections-overview.component";
+import Collection from "./components/pages/collection/collection.component";
 
 class App extends Component {
   unsubscribeAuthOnCalling = null;
@@ -42,7 +44,10 @@ class App extends Component {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/shop" element={<ShopPage />}></Route>
+          <Route path="/shop" element={<ShopPage />}>
+            <Route path="" element={<CollectionOverview />} />
+            <Route path=":collection" element={<Collection />} />
+          </Route>
           <Route
             path="/signin"
             element={
