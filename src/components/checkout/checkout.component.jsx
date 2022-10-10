@@ -5,6 +5,7 @@ import {
 } from "../../redux/cart/cart.reselect";
 import { connect } from "react-redux";
 import CheckoutItem from "../checkout-item/checkout-item.component";
+import StripeCheckoutButton from "../stripe-button/stripe-button.component";
 
 const Checkout = ({ cartItems, totalPrice }) => {
   return (
@@ -32,6 +33,12 @@ const Checkout = ({ cartItems, totalPrice }) => {
       <div className="total">
         <span>TOTAL: ${totalPrice}</span>
       </div>
+      <div className="test-warning">
+        Please use the following details to test payments
+        <br />
+        4242 4242 4242 4242 - Exp: 12/34 - CVV: 123
+      </div>
+      <StripeCheckoutButton price={totalPrice} />
     </div>
   );
 };
