@@ -1,19 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CollectionItem from "../collection-item/collection-item.component";
-import "./collection-preview.styles.scss";
+import {
+  StyleCollectionPreview,
+  StyleTitle,
+  StylePreview,
+} from "./collection-preview.styles";
 
 const CollectionPreview = ({ title, items }) => {
   return (
-    <div className="collection-preview">
-      <h1 className="title">{title.toUpperCase()}</h1>
-      <div className="preview">
+    <StyleCollectionPreview>
+      <Link to={`${title.toLowerCase()}`}>
+        <StyleTitle>{title.toUpperCase()}</StyleTitle>
+      </Link>
+      <StylePreview>
         {items
           .filter((item, index) => index < 4)
           .map((item) => (
             <CollectionItem key={item.id} item={item} />
           ))}
-      </div>
-    </div>
+      </StylePreview>
+    </StyleCollectionPreview>
   );
 };
 
