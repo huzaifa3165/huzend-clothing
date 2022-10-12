@@ -1,7 +1,14 @@
 import "./collection-item.styles.scss";
-import Button from "../button/button.component";
 import { addToCart } from "../../redux/cart/cart.actions";
 import { connect } from "react-redux";
+import {
+  StyleColletionItem,
+  StyleImage,
+  StyleCollectionFooter,
+  StyleName,
+  StylePrice,
+  StyleButton,
+} from "./collection-item.styles";
 
 const CollectionItem = ({ item, addToCart }) => {
   const { name, imageUrl, price } = item;
@@ -9,21 +16,20 @@ const CollectionItem = ({ item, addToCart }) => {
     addToCart(item);
   };
   return (
-    <div className="collection-item">
-      <div
-        className="image"
+    <StyleColletionItem>
+      <StyleImage
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
-      ></div>
-      <div className="collection-footer">
-        <span className="name">{name}</span>
-        <span className="price">{price}</span>
-      </div>
-      <Button inverted onClick={handleClick}>
+      ></StyleImage>
+      <StyleCollectionFooter>
+        <StyleName>{name}</StyleName>
+        <StylePrice>{price}</StylePrice>
+      </StyleCollectionFooter>
+      <StyleButton className="custom-button" inverted onClick={handleClick}>
         ADD TO CART
-      </Button>
-    </div>
+      </StyleButton>
+    </StyleColletionItem>
   );
 };
 

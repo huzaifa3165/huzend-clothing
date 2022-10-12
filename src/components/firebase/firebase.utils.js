@@ -16,9 +16,9 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-export const createNewUserIfExist = async (authenticatedUser, additional) => {
+export const createNewUserIfExist = (authenticatedUser, additional) => {
   const userRef = firestore.doc(`users/${authenticatedUser.uid}`);
-  const snapShot = await userRef.get();
+  const snapShot = userRef.get();
   if (!snapShot.exists) {
     const { displayName, email } = authenticatedUser;
     const createdAt = new Date();
@@ -34,6 +34,46 @@ export const createNewUserIfExist = async (authenticatedUser, additional) => {
     }
   }
   return userRef;
+};
+
+export const addCollectionsAndDocuments = async (
+  collectionName,
+  collectionObj
+) => {
+  const collectionsRef = firestore.collection(collectionName);
+  const snapShotCol = await collectionsRef.get();
+  if (snapShotCol.empty) {
+    const batch = firestore.batch();
+    collectionObj.forEach((obj) => {
+      const newDocRef = collectionsRef.doc();
+      batch.set(newDocRef, obj);
+    });
+    const data = await batch.commit();
+    console.log(data);
+    return data;
+  }
+};
+
+export const getCollectionsData = async (snapShotCol) => {
+  if (snapShotCol) {
+    const collectionArray = snapShotCol.docs.map((document) => {
+      const { title, items } = Object.values(document.data())[0];
+      return {
+        routeName: encodeURI(title.toLowerCase()),
+        id: document.id,
+        title,
+        items,
+      };
+    });
+    const collectionsDataObject = collectionArray.reduce(
+      (accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;
+        return accumulator;
+      },
+      {}
+    );
+    return collectionsDataObject;
+  }
 };
 
 const provider = new firebase.auth.GoogleAuthProvider();

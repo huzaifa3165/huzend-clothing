@@ -4,5 +4,5 @@ const selectCollection = (state) => state.collectionsReducer;
 
 export const selectShopData = createSelector(
   [selectCollection],
-  (collections) => collections.SHOP_DATA
+  (collections) => collections.shopData
 );
