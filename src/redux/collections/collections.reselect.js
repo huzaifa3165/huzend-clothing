@@ -6,3 +6,8 @@ export const selectShopData = createSelector(
   [selectCollection],
   (collections) => collections.shopData
 );
+
+export const selectIsFetching = createSelector(
+  [selectCollection],
+  (collections) => collections.isFetching
+);

@@ -10,16 +10,14 @@ import {
 } from "./components/firebase/firebase.utils.js";
 
 import { connect } from "react-redux";
-import { Component } from "react";
+import { useEffect } from "react";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.reselect";
 import Checkout from "./components/checkout/checkout.component";
 
-class App extends Component {
-  unsubscribeAuthOnCalling = null;
-  componentDidMount() {
-    const { setCurrentUser } = this.props;
-    this.unsubscribeAuthOnCalling = auth.onAuthStateChanged(async (user) => {
+const App = ({ currentUser, setCurrentUser }) => {
+  useEffect(() => {
+    const unsubscribeAuthOnCalling = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const userRef = createNewUserIfExist(user);
         userRef.onSnapshot((snapShot) => {
@@ -32,34 +30,29 @@ class App extends Component {
         setCurrentUser(user);
       }
     });
-  }
-  componentWillUnmount() {
-    this.unsubscribeAuthOnCalling();
-  }
-  render() {
-    const { currentUser } = this.props;
-    return (
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/shop/*" element={<ShopPage />}></Route>
-          <Route
-            path="/signin"
-            element={
-              currentUser === null ? (
-                <SignInAndSignUpPage />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          ></Route>
-          <Route path="/checkout" element={<Checkout />}></Route>
-        </Routes>
-      </div>
-    );
-  }
-}
+    return () => {
+      unsubscribeAuthOnCalling();
+    };
+  }, []);
+
+  return (
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/shop/*" element={<ShopPage />}></Route>
+        <Route
+          path="/signin"
+          element={
+            currentUser === null ? <SignInAndSignUpPage /> : <Navigate to="/" />
+          }
+        ></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
+      </Routes>
+    </div>
+  );
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setCurrentUser: (user) => dispatch(setCurrentUser(user)),

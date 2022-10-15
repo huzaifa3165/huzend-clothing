@@ -54,7 +54,7 @@ export const addCollectionsAndDocuments = async (
   }
 };
 
-export const getCollectionsData = async (snapShotCol) => {
+export const mapCollectionsToObject = async (snapShotCol) => {
   if (snapShotCol) {
     const collectionArray = snapShotCol.docs.map((document) => {
       const { title, items } = Object.values(document.data())[0];
