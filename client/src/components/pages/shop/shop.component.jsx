@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { fetchCollectionAsync } from "../../../redux/collections/collections.actions";
 import { connect } from "react-redux";
 import CollectionOverview from "../../collections-overview/collections-overview.component";
-import Collection from "../../pages/collection/collection.component";
+import Collection from "../collection/collection.component";
 import WithSpinner from "../../with-spinner/with-spinner.component";
 import { selectIsFetching } from "../../../redux/collections/collections.reselect";
 
